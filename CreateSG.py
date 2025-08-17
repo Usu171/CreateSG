@@ -193,15 +193,17 @@ def generate_connected_conveyors(connections, origin=None, base_filename='convey
         origin: Optional origin [x, y, z]. Default [0, 0, 0].
         base_filename: Base filename for saving NBT files. Default 'conveyor.nbt'.
     """
-    main = ConveyorNBT(origin=origin)
-    main.add_connection(connections)
+    origin = origin or [0, 0, 0]
+    conn_list = [connections] if isinstance(connections[0], (int, float)) else connections
+    relative_conns = [calculate_relative_pos(conn, origin) for conn in conn_list]
+    main = ConveyorNBT()
+    main.add_connection(relative_conns)
     main.save(base_filename.replace('.nbt', '_main.nbt'))
 
-    # Convert single coordinate to list of coordinates for consistent processing
-    conn_list = [connections] if isinstance(connections[0], (int, float)) else connections
-    for i, conn in enumerate(conn_list, 1):
+
+    for i, conn in enumerate(relative_conns, 1):
         inverse_conn = [-x for x in conn]
-        inv_conveyor = ConveyorNBT(origin=origin)
+        inv_conveyor = ConveyorNBT()
         inv_conveyor.add_connection(inverse_conn)
         inv_conveyor.save(base_filename.replace('.nbt', f'_{i}.nbt'))
 
