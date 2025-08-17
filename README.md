@@ -5,7 +5,7 @@ Generate schematics exceeding the original range limit for the mechanical arm an
 # Requirements
 
 - Python 3.8+
-- nbtlib 1.21.1
+- nbtlib 1.12.1
 
 # Usage
 
