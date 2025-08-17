@@ -6,3 +6,5 @@ test/
 nbt/
 
 *.nbt
+
+test.py
